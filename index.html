@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#7657e8">
+<title>Petfolio | สำรวจความชอบสัตว์เลี้ยง</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&family=Kanit:wght@400;500;600;700&display=swap');
+:root{--ink:#24213a;--muted:#77758c;--purple:#7657e8;--pink:#f17ca8;--line:#eceaf4;--bg:#f7f6fc;--white:#fff;--shadow:0 18px 50px rgba(47,34,94,.09)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:'Prompt',sans-serif}
+button,input{font:inherit}.shell{max-width:1180px;margin:auto;padding:28px 22px 60px}
+header{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px;gap:16px}.brand{display:flex;align-items:center;gap:12px}.logo{width:48px;height:48px;border-radius:16px;background:linear-gradient(135deg,#8065f0,#ee83b2);display:grid;place-items:center;color:white;font-size:25px;box-shadow:0 9px 20px #9c83eb55}.brand h1{font:600 22px 'Kanit';margin:0}.brand p{margin:0;color:var(--muted);font-size:12px}.live{border:1px solid #e5e0f6;background:white;border-radius:30px;padding:9px 14px;color:#6d58c7;font-size:12px}
+.hero{background:linear-gradient(115deg,#7456df,#9c77ed 58%,#f18bb2);border-radius:28px;padding:34px 38px;color:#fff;position:relative;overflow:hidden;box-shadow:var(--shadow);margin-bottom:24px}.hero:after{content:'🐾';position:absolute;font-size:150px;right:42px;top:5px;opacity:.13;transform:rotate(-18deg)}.hero h2{font:600 30px 'Kanit';margin:0 0 6px}.hero p{margin:0;opacity:.9;font-size:14px;max-width:560px}
+.tabs{display:flex;gap:8px;margin:22px 0}.tab{border:0;background:#eeecf7;color:#716d83;padding:11px 18px;border-radius:13px;cursor:pointer;font-weight:500}.tab.active{background:var(--ink);color:white}
+.panel{background:white;border:1px solid var(--line);border-radius:22px;padding:26px;box-shadow:var(--shadow)}.panel h3{font:600 21px 'Kanit';margin:0 0 5px}.sub{color:var(--muted);font-size:13px;margin:0 0 22px}
+.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.field label{display:block;font-size:13px;font-weight:500;margin-bottom:8px}.field input{width:100%;border:1px solid #e5e2ee;border-radius:12px;padding:13px 14px;outline:none;background:#fdfcff}.field input:focus{border-color:var(--purple);box-shadow:0 0 0 3px #7657e81a}.wide{grid-column:1/-1}
+.petgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.pet{border:1px solid #e9e6f1;background:#fff;border-radius:15px;padding:15px 10px;text-align:center;cursor:pointer;transition:.18s;position:relative}.pet:hover{transform:translateY(-2px);border-color:#b7a9f2}.pet.selected{background:#f2efff;border:2px solid var(--purple);padding:14px 9px;box-shadow:0 6px 18px #7657e81c}.pet .emoji{font-size:30px;display:block;margin-bottom:6px}.pet span:last-child{font-size:13px}.pet.selected:after{content:'✓';position:absolute;right:8px;top:6px;background:var(--purple);color:white;border-radius:50%;width:19px;height:19px;font-size:12px;line-height:19px}
+.otherbox{margin-top:12px;display:none}.otherbox.show{display:block}.actions{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:22px}.hint{font-size:12px;color:var(--muted)}.primary{border:0;border-radius:13px;padding:13px 22px;color:white;background:linear-gradient(110deg,#7657e8,#a176eb);font-weight:600;cursor:pointer;box-shadow:0 8px 18px #7657e833}.primary:disabled{opacity:.55;cursor:wait}
+.notice{font-size:13px;margin-top:14px;display:none;padding:11px 13px;border-radius:11px}.notice.ok{display:block;background:#eaf8f0;color:#237b4c}.notice.err{display:block;background:#fff0f1;color:#b33d52}
+.dashboard{display:none}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px}.stat{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px}.stat .num{font:600 28px 'Kanit';margin-top:4px}.stat .lbl{font-size:12px;color:var(--muted)}.dashgrid{display:grid;grid-template-columns:1fr 1.15fr;gap:16px}.bars{display:grid;gap:13px}.barrow{display:grid;grid-template-columns:75px 1fr 35px;align-items:center;gap:10px;font-size:13px}.track{height:10px;background:#f0eef6;border-radius:20px;overflow:hidden}.fill{height:100%;border-radius:20px;background:linear-gradient(90deg,#8064e9,#ee83b2)}.tablewrap{overflow:auto}table{width:100%;border-collapse:collapse;font-size:13px;min-width:520px}th,td{text-align:left;padding:12px 10px;border-bottom:1px solid #f0eef5;vertical-align:top}th{color:var(--muted);font-weight:500;background:#fbfaff}.search{width:100%;border:1px solid #e5e2ee;border-radius:11px;padding:10px 12px;margin:12px 0 8px}.empty{color:var(--muted);font-size:13px;padding:18px;text-align:center}.footer{text-align:center;color:#aaa5b8;font-size:11px;margin-top:25px}
+@media(max-width:760px){.shell{padding:18px 14px 40px}.hero{padding:26px 22px}.hero h2{font-size:25px}.hero:after{right:5px;font-size:100px}.formgrid,.dashgrid{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}.petgrid{grid-template-columns:repeat(2,1fr)}.panel{padding:20px}.actions{align-items:stretch;flex-direction:column}.actions .primary{width:100%}}
+</style>
+</head>
+<body>
+<div class="shell">
+<header><div class="brand"><div class="logo">🐾</div><div><h1>Petfolio</h1><p>Pet Preference Survey</p></div></div><div class="live">✦ Student Survey</div></header>
+<section class="hero"><h2>สัตว์เลี้ยงในดวงใจของคุณคืออะไร?</h2><p>ร่วมแบ่งปันความชอบของคุณ เลือกได้มากกว่าหนึ่งชนิด แล้วมาดูภาพรวมความชอบของทุกคนไปด้วยกัน</p></section>
+<nav class="tabs"><button class="tab active" data-tab="survey">✦ แบบสำรวจ</button><button class="tab" data-tab="dashboard">▦ Dashboard</button></nav>
+<section id="survey" class="panel">
+<h3>แบบสำรวจความชอบสัตว์เลี้ยง</h3><p class="sub">กรอกข้อมูลให้ครบ และเลือกสัตว์ที่คุณชื่นชอบได้มากกว่าหนึ่งชนิด</p>
+<form id="surveyForm">
+<div class="formgrid">
+<div class="field"><label for="fullname">ชื่อ <span style="color:#e16b91">*</span></label><input id="fullname" name="fullname" type="text" placeholder="กรอกชื่อเท่านั้นเป็นภาษาไทย" required maxlength="100" autocomplete="name"></div>
+<div class="field"><label for="age">อายุ (ปี) <span style="color:#e16b91">*</span></label><input id="age" name="age" type="number" placeholder="เช่น 22" required min="1" max="120" step="1"></div>
+<div class="field wide"><label>เลือกสัตว์ที่ชอบ <span style="color:#e16b91">*</span></label><div class="petgrid" id="petGrid">
+<button type="button" class="pet" data-pet="แมว"><span class="emoji">🐱</span><span>แมว</span></button>
+<button type="button" class="pet" data-pet="หมา"><span class="emoji">🐶</span><span>หมา</span></button>
+<button type="button" class="pet" data-pet="กระต่าย"><span class="emoji">🐰</span><span>กระต่าย</span></button>
+<button type="button" class="pet" data-pet="นก"><span class="emoji">🐦</span><span>นก</span></button>
+<button type="button" class="pet" data-pet="ปลา"><span class="emoji">🐠</span><span>ปลา</span></button>
+<button type="button" class="pet" data-pet="งู"><span class="emoji">🐍</span><span>งู</span></button>
+<button type="button" class="pet" data-pet="เต่า"><span class="emoji">🐢</span><span>เต่า</span></button>
+<button type="button" class="pet" data-pet="อื่นๆ"><span class="emoji">✨</span><span>อื่นๆ</span></button>
+</div><div class="otherbox" id="otherBox"><input id="otherText" type="text" placeholder="ระบุสัตว์อื่น ๆ ที่ชอบ (ถ้ามี)" maxlength="100"></div></div>
+</div>
+<div class="actions"><span class="hint">ข้อมูลจะถูกบันทึกลง Google Sheets เมื่อเชื่อมต่อ Backend แล้ว</span><button class="primary" id="submitBtn" type="submit">ส่งแบบสำรวจ <span>→</span></button></div><div id="notice" class="notice" role="status"></div>
+</form></section>
+<section id="dashboard" class="dashboard">
+<div class="stats">
+<div class="stat"><div class="lbl">ผู้ตอบแบบสำรวจทั้งหมด</div><div class="num" id="totalCount">0</div></div>
+<div class="stat"><div class="lbl">อายุเฉลี่ย</div><div class="num" id="avgAge">–</div></div>
+<div class="stat"><div class="lbl">สัตว์ที่ได้รับความนิยม</div><div class="num" id="topPet">–</div></div>
+<div class="stat"><div class="lbl">จำนวนชนิดสัตว์ที่ถูกเลือก</div><div class="num" id="petKinds">0</div></div>
+</div>
+<div class="dashgrid">
+<div class="panel"><h3>ความชอบสัตว์เลี้ยง</h3><p class="sub">จำนวนครั้งที่สัตว์แต่ละชนิดถูกเลือก</p><div id="petBars" class="bars"><div class="empty">ยังไม่มีข้อมูล</div></div></div>
+<div class="panel"><h3>ข้อมูลรายบุคคล</h3><p class="sub">ค้นหาชื่อเพื่อดูข้อมูลผู้ตอบแบบสำรวจ</p><input class="search" id="searchInput" placeholder="ค้นหาชื่อ-สกุล..."><div class="tablewrap"><table><thead><tr><th>ชื่อ-สกุล</th><th>อายุ</th><th>สัตว์ที่ชอบ</th></tr></thead><tbody id="peopleRows"><tr><td colspan="3" class="empty">ยังไม่มีข้อมูล</td></tr></tbody></table></div></div>
+</div>
+</section>
+<div class="footer">PETFOLIO · PET PREFERENCE SURVEY</div>
+</div>
+<script>
+/* ใส่ URL ของ Google Apps Script Web App หลัง Deploy ในตัวแปรนี้ */
+const API_URL = "https://script.google.com/macros/s/AKfycbyBUcN6yMPEDJLhg4IMt51eAsoBI9qn-2s94F8fnL_Lx9KyaFWk9ymZ3074idm9LfYo/exec";
+const PETS = ["แมว","หมา","กระต่าย","นก","ปลา","งู","เต่า","อื่นๆ"];
+let selectedPets = new Set();
+let records = [];
+
+document.querySelectorAll('.tab').forEach(btn=>btn.addEventListener('click',()=>{
+ document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x===btn));
+ document.getElementById('survey').style.display=btn.dataset.tab==='survey'?'block':'none';
+ document.getElementById('dashboard').style.display=btn.dataset.tab==='dashboard'?'block':'none';
+ if(btn.dataset.tab==='dashboard') loadRecords();
+}));
+document.querySelectorAll('.pet').forEach(btn=>btn.addEventListener('click',()=>{
+ const pet=btn.dataset.pet;
+ selectedPets.has(pet)?selectedPets.delete(pet):selectedPets.add(pet);
+ btn.classList.toggle('selected',selectedPets.has(pet));
+ document.getElementById('otherBox').classList.toggle('show',selectedPets.has('อื่นๆ'));
+}));
+function showNotice(message,type){const el=document.getElementById('notice');el.textContent=message;el.className='notice '+type;}
+function localSave(record){records.push(record);try{localStorage.setItem('petfolio_records',JSON.stringify(records));}catch(e){}}
+function readLocal(){try{return JSON.parse(localStorage.getItem('petfolio_records')||'[]')}catch(e){return []}}
+document.getElementById('surveyForm').addEventListener('submit',async e=>{
+ e.preventDefault();
+ const fullname=document.getElementById('fullname').value.trim();
+ const age=Number(document.getElementById('age').value);
+ const pets=[...selectedPets];
+ if(!fullname||!age||age<1||age>120){showNotice('กรุณาตรวจสอบชื่อ-สกุลและอายุให้ถูกต้อง','err');return;}
+ if(!/^[ก-๙\sเแโใไำะาิีึืุูั็่้๊๋์ฯๅ]+$/.test(fullname)){showNotice('กรุณากรอกชื่อ-สกุลเป็นภาษาไทย','err');return;}
+ if(!pets.length){showNotice('กรุณาเลือกสัตว์ที่ชอบอย่างน้อย 1 ชนิด','err');return;}
+ const other=document.getElementById('otherText').value.trim();
+ if(pets.includes('อื่นๆ')&&!other){showNotice('กรุณาระบุสัตว์อื่น ๆ ที่ชอบ','err');return;}
+ const record={fullname,age,pets,other: pets.includes('อื่นๆ')?other:'',timestamp:new Date().toISOString()};
+ const btn=document.getElementById('submitBtn');btn.disabled=true;btn.textContent='กำลังบันทึก...';
+ try{
+   if(API_URL){
+     const response=await fetch(API_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(record)});
+     const result=await response.json();if(!result.success)throw new Error(result.message||'บันทึกไม่สำเร็จ');
+   }else{
+     localSave(record);
+   }
+   showNotice(API_URL?'บันทึกข้อมูลลง Google Sheets เรียบร้อยแล้ว':'บันทึกตัวอย่างไว้ในเบราว์เซอร์นี้แล้ว (ยังไม่ได้เชื่อม Google Sheets)','ok');
+   document.getElementById('surveyForm').reset();selectedPets.clear();document.querySelectorAll('.pet').forEach(x=>x.classList.remove('selected'));document.getElementById('otherBox').classList.remove('show');
+ }catch(err){showNotice('ไม่สามารถบันทึกข้อมูลได้: '+err.message,'err');}
+ finally{btn.disabled=false;btn.innerHTML='ส่งแบบสำรวจ <span>→</span>';}
+});
+async function loadRecords(){
+ records=readLocal();
+ if(API_URL){
+  try{const res=await fetch(API_URL+'?action=list');const data=await res.json();if(data.success)records=data.records||[];else throw new Error(data.message);}
+  catch(err){showNotice('โหลดข้อมูลจาก Google Sheets ไม่สำเร็จ: '+err.message,'err');}
+ }
+ renderDashboard();
+}
+function renderDashboard(){
+ const total=records.length,ages=records.map(x=>Number(x.age)).filter(x=>x>0);
+ const counts=Object.fromEntries(PETS.map(p=>[p,0]));
+ records.forEach(r=>(Array.isArray(r.pets)?r.pets:String(r.pets||'').split(',').map(x=>x.trim())).forEach(p=>{if(counts[p]!==undefined)counts[p]++}));
+ const top=Object.entries(counts).sort((a,b)=>b[1]-a[1])[0];
+ document.getElementById('totalCount').textContent=total;
+ document.getElementById('avgAge').textContent=ages.length?(ages.reduce((a,b)=>a+b,0)/ages.length).toFixed(1):'–';
+ document.getElementById('topPet').textContent=top&&top[1]?top[0]:'–';
+ document.getElementById('petKinds').textContent=Object.values(counts).filter(x=>x>0).length;
+ const max=Math.max(1,...Object.values(counts));
+ document.getElementById('petBars').innerHTML=PETS.map(p=>`<div class="barrow"><span>${p}</span><div class="track"><div class="fill" style="width:${counts[p]/max*100}%"></div></div><b>${counts[p]}</b></div>`).join('');
+ renderPeople();
+}
+function renderPeople(){
+ const q=document.getElementById('searchInput').value.trim().toLowerCase();
+ const filtered=records.filter(r=>String(r.fullname||'').toLowerCase().includes(q));
+ document.getElementById('peopleRows').innerHTML=filtered.length?filtered.map(r=>`<tr><td>${escapeHtml(r.fullname||'')}</td><td>${escapeHtml(String(r.age||''))}</td><td>${escapeHtml(Array.isArray(r.pets)?r.pets.join(', '):String(r.pets||''))}${r.other?' ('+escapeHtml(r.other)+')':''}</td></tr>`).join(''):'<tr><td colspan="3" class="empty">ไม่พบข้อมูล</td></tr>';
+}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+document.getElementById('searchInput').addEventListener('input',renderPeople);
+loadRecords();
+</script>
+</body>
+</html>
